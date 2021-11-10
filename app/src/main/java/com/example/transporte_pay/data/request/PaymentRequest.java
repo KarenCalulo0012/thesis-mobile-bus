@@ -1,12 +1,37 @@
 package com.example.transporte_pay.data.request;
 
-public class PaymentRequest {
+import com.google.gson.annotations.SerializedName;
 
+import java.io.File;
+
+public class PaymentRequest {
+    @SerializedName("status")
     private boolean status;
+    @SerializedName("remarks")
     private String remarks;
+    @SerializedName("itemId")
     private String itemId;
+
+    @SerializedName("gcash_number")
     private String gcash_number;
+    @SerializedName("referenceId")
     private String referenceId;
+    @SerializedName("image")
+    private File image;
+    @SerializedName("image_name")
+    private String Title;
+
+//    @SerializedName("image")
+//    private String Image;
+//
+//
+//    @SerializedName("response")
+//    private String Response;
+//
+//    public String getResponse() {
+//        return Response;
+//    }
+
 
     public boolean isStatus(){
         return status;
@@ -38,6 +63,14 @@ public class PaymentRequest {
 
     public void setReferenceId(String referenceId) {
         this.referenceId = referenceId;
+    }
+
+    public File getImage() {
+        return image;
+    }
+
+    public void setImage(File image) {
+        this.image = image;
     }
 
 

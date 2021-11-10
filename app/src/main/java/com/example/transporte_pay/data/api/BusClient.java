@@ -34,6 +34,9 @@ public interface BusClient {
     Call<TransactionResponse> getTransactionData(
             @Header("Authorization") String auth);
 
+    @POST(Constants.BUS_LOGS_DATA)
+    Call<TransactionResponse> getTransactionDataPassenger(@Body TransactionRequest transactionRequest,
+            @Header("Authorization") String auth);
     @POST(Constants.BUS_GPS)
     Call<Booking> getLongLat (
             @Body LongLatRequest longLatRequest,

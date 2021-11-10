@@ -16,13 +16,14 @@ import com.example.transporte_pay.R;
 import com.example.transporte_pay.utils.SessionManager;
 import com.example.transporte_pay.views.activity.BookingActivity;
 import com.example.transporte_pay.views.activity.ContactTraceActivity;
+import com.example.transporte_pay.views.activity.PassengerReport;
 import com.example.transporte_pay.views.activity.ProfileActivity;
 import com.example.transporte_pay.views.activity.TravelLogsActivity;
 
 public class PassengerDashboardFragment extends Fragment implements View.OnClickListener{
     private String message;
     public TextView text;
-    CardView card1, card2, card3 , card4;
+    CardView card1, card2, card3 , card4 ,card5;
     SessionManager sessionManager;
 
 
@@ -42,10 +43,12 @@ public class PassengerDashboardFragment extends Fragment implements View.OnClick
         card2 = view.findViewById(R.id.log_card);
         card3 = view.findViewById(R.id.account_card);
         card4 = view.findViewById(R.id.covid_card);
+        card5 = view.findViewById(R.id.report_card);
         card1.setOnClickListener(this);
         card2.setOnClickListener(this);
         card3.setOnClickListener(this);
         card4.setOnClickListener(this);
+        card5.setOnClickListener(this);
 
         Bundle data = getArguments();
 
@@ -88,6 +91,12 @@ public class PassengerDashboardFragment extends Fragment implements View.OnClick
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             break;
+            case R.id.report_card:
+                context = getActivity().getApplicationContext();
+                intent = new Intent(context, PassengerReport.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+                break;
 
 
         }

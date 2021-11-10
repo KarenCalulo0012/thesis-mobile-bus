@@ -10,6 +10,8 @@ public final class Constants {
     public static final String UPDATE_DATA = "user/update";
     public static final String UPDATE_PASS = "update_password";
     public static final String BUS_LOGS = "buses/bookings/";
+    public static final String BUS_LOGS_DATA = "buses/bookings/passenger";
+
     public static final String BUS_ROUTES = "buses/bookings/step/one/";
     public static final String BUS_ROUTES2 = "buses/bookings/step/two/";
     public static final String BUS_CONFIRM = "buses/bookings/confirm";

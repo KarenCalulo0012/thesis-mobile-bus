@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,10 +21,7 @@ import com.example.transporte_pay.data.api.ApiClient;
 import com.example.transporte_pay.data.model.Booking;
 import com.example.transporte_pay.data.request.ConductorRequest;
 import com.example.transporte_pay.utils.SessionManager;
-import com.example.transporte_pay.views.activity.MapsActivity;
 import com.example.transporte_pay.views.activity.PaymentActivity;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -34,46 +30,29 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ConductorListAdapter extends RecyclerView.Adapter<ConductorListAdapter.ViewHolder> {
+public class PassengerReportAdapter extends RecyclerView.Adapter<PassengerReportAdapter.ViewHolder> {
     private List<Booking> bookingList;
     private Context context;
     private Integer roleId,id;
-    public  String token;
+    public  String token,uFrom,uTo;
     SessionManager sessionManager;
 
 
 
 
 
-    public void setBookingList(List<Booking> bookings, Integer r) {
+    public void setBookingList(List<Booking> bookings, Integer r,String from , String to) {
         this.bookingList = bookings;
         this.roleId = r;
+        this.uFrom = from;
+        this.uTo = to;
 //        this.logsListener = listener;
         notifyDataSetChanged();
     }
 
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView locations, date, status, name;
-        LinearLayout linearLayout;
-
-        Button view,geo;
-
-        public ViewHolder(@NonNull @NotNull View itemView) {
-            super(itemView);
-            locations = itemView.findViewById(R.id.locations_tv);
-            date = itemView.findViewById(R.id.date_tv);
-            status = itemView.findViewById(R.id.status_tv);
-            view = itemView.findViewById(R.id.button);
-            geo = itemView.findViewById(R.id.geobutton);
-            name = itemView.findViewById(R.id.passengerName_tv);
-            linearLayout=itemView.findViewById(R.id.box);
-
-        }
-    }
     @NonNull
     @Override
-    public ConductorListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PassengerReportAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         sessionManager = new SessionManager(parent.getContext());
         sessionManager.checkLogin();
@@ -82,7 +61,7 @@ public class ConductorListAdapter extends RecyclerView.Adapter<ConductorListAdap
         HashMap<String, Integer> uSerDetails= sessionManager.getID();
         id =  Integer.valueOf(uSerDetails.get(SessionManager.ID));
 
-        return new ConductorListAdapter.ViewHolder(LayoutInflater.from(context)
+        return new PassengerReportAdapter.ViewHolder(LayoutInflater.from(context)
                 .inflate(R.layout.booking_list, parent, false));
     }
 
@@ -97,10 +76,9 @@ public class ConductorListAdapter extends RecyclerView.Adapter<ConductorListAdap
         }
         sStatus= bookingList.get(position).getSchedule().getsStatus();
 
-        if(sStatus.equals("open") )
-        {
+
 //            Toast.makeText(context, sStatus, Toast.LENGTH_SHORT).show();
-            if(bookingList.get(position).getConductorId() == id)
+            if(bookingList.get(position).getUserId() == id)
             {
                 name = bookingList.get(position).getUser().getName();
                 userId= String.valueOf(bookingList.get(position).getUser().getId());
@@ -217,9 +195,6 @@ public class ConductorListAdapter extends RecyclerView.Adapter<ConductorListAdap
                 holder.linearLayout.setVisibility(View.GONE);
             }
 
-        }else{
-                holder.linearLayout.setVisibility(View.GONE);
-        }
 
     }
 
@@ -227,4 +202,24 @@ public class ConductorListAdapter extends RecyclerView.Adapter<ConductorListAdap
     public int getItemCount() {
         return bookingList.size();
     }
+
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView locations, date, status, name;
+        LinearLayout linearLayout;
+
+        Button view,geo;
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            locations = itemView.findViewById(R.id.locations_tv);
+            date = itemView.findViewById(R.id.date_tv);
+            status = itemView.findViewById(R.id.status_tv);
+            view = itemView.findViewById(R.id.button);
+            geo = itemView.findViewById(R.id.geobutton);
+            name = itemView.findViewById(R.id.passengerName_tv);
+            linearLayout=itemView.findViewById(R.id.box);
+        }
+    }
+
+
 }

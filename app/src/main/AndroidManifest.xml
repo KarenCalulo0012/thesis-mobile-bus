@@ -29,6 +29,9 @@
         tools:ignore="AllowBackup"
         tools:targetApi="m">
         <activity
+            android:name=".views.activity.PassengerReport"
+            android:exported="true" />
+        <activity
             android:name=".views.activity.ConductorBookingActivity"
             android:exported="true" />
         <!--

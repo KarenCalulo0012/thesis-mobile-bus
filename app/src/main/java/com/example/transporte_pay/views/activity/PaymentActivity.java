@@ -26,6 +26,7 @@ import com.example.transporte_pay.data.api.ApiClient;
 import com.example.transporte_pay.data.api.PaymentClient;
 import com.example.transporte_pay.data.model.Routes;
 import com.example.transporte_pay.data.request.PaymentRequest;
+import com.example.transporte_pay.data.request.PaymentRequestForImage;
 import com.example.transporte_pay.data.request.ScheduleRequest;
 import com.example.transporte_pay.data.request.TransactionRequest;
 import com.example.transporte_pay.utils.AlertDialogManager;
@@ -44,6 +45,7 @@ import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,10 +57,11 @@ public class PaymentActivity extends AppCompatActivity {
     ImageView showImage;
     Button save,back;
     int scheduleID, quantity;
-    String token,transId,busGcashNumber,fullname,bus_id;
+    String token,transId,busGcashNumber,fullname,bus_id,pathImage;
     SessionManager sessionManager;
     AlertDialogManager alert;
     Uri imageUri;
+    File testFIle;
     private Bitmap bitmap;
 
 
@@ -74,6 +77,9 @@ public class PaymentActivity extends AppCompatActivity {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),path);
                 showImage.setImageBitmap(bitmap);
                 showImage.setVisibility(View.VISIBLE);
+
+                 testFIle   = new File(String.valueOf(path));
+                  pathImage = String.valueOf(path);
 
             }catch (IOException e){
                 e.printStackTrace();
@@ -151,11 +157,11 @@ public class PaymentActivity extends AppCompatActivity {
     }
     private void uploadImage(){
 
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//        bitmap.compress(Bitmap.CompressFormat.JPEG,75,byteArrayOutputStream);
-//        byte[] imageInByte   = byteArrayOutputStream.toByteArray();
-//
-//        String encodedImage =Base64.getEncoder().encodeToString(imageInByte);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,75,byteArrayOutputStream);
+        byte[] imageInByte   = byteArrayOutputStream.toByteArray();
+
+        String encodedImage =Base64.getEncoder().encodeToString(imageInByte);
 //
 //        File imageFile = bitmapToFile(getApplicationContext(),bitmap,"basim");
 //
@@ -169,7 +175,7 @@ public class PaymentActivity extends AppCompatActivity {
 //        MultipartBody.Part body =
 //                MultipartBody.Part.createFormData("picture", imageFile.getName(), requestFile);
 //
-        String referenceId = reference.getText().toString();
+        String referenceIds = reference.getText().toString();
         String gcashNumber = gcash.getText().toString();
 //        RequestBody references =
 //                RequestBody.create(
@@ -181,8 +187,64 @@ public class PaymentActivity extends AppCompatActivity {
 //        Toast.makeText(getApplicationContext(), imageFile.getName(), Toast.LENGTH_SHORT).show();
         PaymentRequest paymentRequest = new PaymentRequest();
         paymentRequest.setItemId(transId);
-        paymentRequest.setReferenceId(referenceId);
+        paymentRequest.setReferenceId(referenceIds);
         paymentRequest.setGcash(gcashNumber);
+//        paymentRequest.setImage(testFIle);
+//        RequestBody itemId = RequestBody.create(MediaType.parse("text/plain"),transId);
+//        RequestBody referenceId = RequestBody.create(MediaType.parse("text/plain"),referenceIds);
+//
+//
+//        PaymentRequestForImage paymentRequestForImage = new PaymentRequestForImage();
+//        paymentRequestForImage.setItemId(itemId);
+//        paymentRequestForImage.setReferenceId(referenceId);
+//        MultipartBody.Part image = null;
+//        if(pathImage!=null){
+////            File file = new File(pathImage);
+//            File file = new File(imageUri.getPath());
+////            File fileNew = FileUtils.getFile(this, imageUri);
+//
+//            RequestBody requestFile =
+//                    RequestBody.create(file,
+//                            MediaType.parse(getContentResolver().getType(imageUri))
+//
+//                    );
+//            RequestBody proofImage = RequestBody.create(file,MediaType.parse("image/*"));
+//            image                  = MultipartBody.Part.createFormData("image",file.getName(),proofImage);
+//            paymentRequestForImage.setImage(image);
+//            Toast.makeText(getApplicationContext(), image.toString(), Toast.LENGTH_SHORT).show();
+//            Call<ResponseBody> request = ApiClient.getPaymentClient().upload(image,"Bearer :"+token);
+//            request.enqueue(new Callback<ResponseBody>() {
+//                @Override
+//                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//
+//                }
+//
+//                @Override
+//                public void onFailure(Call<ResponseBody> call, Throwable t) {
+//
+//                }
+//            });
+
+//            Call<PaymentRequestForImage> paymentCall = ApiClient.getPaymentClient().uploadImages(paymentRequestForImage,"Bearer :"+token);
+//            paymentCall.enqueue(new Callback<PaymentRequestForImage>() {
+//                @Override
+//                public void onResponse(Call<PaymentRequestForImage> call, Response<PaymentRequestForImage> response) {
+////                    if(response.body().isStatus()){
+//////                    Toast.makeText(PaymentActivity.this,response.body().getRemarks(),Toast.LENGTH_SHORT).show();
+//////                    Intent intent = new Intent(PaymentActivity.this,TravelLogsActivity.class);
+//////                    startActivity(intent);
+//////                }else{
+//////                    Toast.makeText(PaymentActivity.this,response.body().getRemarks(),Toast.LENGTH_SHORT).show();
+//////
+////                   }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<PaymentRequestForImage> call, Throwable t) {
+//
+//                }
+//            });
+//        }
 //        paymentRequest.setSchedule_date(uDate);
 //        Call<PaymentRequest> paymentCall = ApiClient.getPaymentClient().uploadImage(body, item_id ,references,"Bearer"+ token);
         Call<PaymentRequest> paymentCall = ApiClient.getPaymentClient().uploadImage(paymentRequest,"Bearer"+ token);
