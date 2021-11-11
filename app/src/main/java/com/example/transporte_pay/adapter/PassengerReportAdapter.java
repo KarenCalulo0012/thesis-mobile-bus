@@ -100,9 +100,12 @@ public class PassengerReportAdapter extends RecyclerView.Adapter<PassengerReport
 //        Log.e("")
         Log.e("From",uFrom);
         Log.e("To",uTo);
-
-        if(bookingList.get(position).getUserId() == id) {
-            if((bookingList.get(position).getSchedule().getScheduleDate().compareTo(uFrom) > 0) && (bookingList.get(position).getSchedule().getScheduleDate().compareTo(uTo) < 0) ){
+        String userId = bookingList.get(position).getUserId().toString();
+        String uId = id.toString();
+        if(userId.equals(uId))
+        {
+            String scDate = bookingList.get(position).getSchedule().getScheduleDate().toString();
+            if((scDate.compareTo(uFrom.toString()) > 0) || (scDate.compareTo(uTo.toString()) < 0) ){
             name = bookingList.get(position).getUser().getName();
             status = bookingList.get(position).getStatus().getId();
             bus_gcash_number = bookingList.get(position).getBus().getGcashNumber();
