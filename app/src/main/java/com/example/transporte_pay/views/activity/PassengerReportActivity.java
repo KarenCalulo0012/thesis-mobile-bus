@@ -28,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PassengerReport extends AppCompatActivity {
+public class PassengerReportActivity extends AppCompatActivity {
     DatePicker datePickerFrom;
     DatePicker datePickerTo;
     Button search;
