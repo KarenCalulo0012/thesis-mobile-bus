@@ -58,6 +58,9 @@ public class Schedule {
     @SerializedName("status")
     @Expose
     private String sStatus;
+    @SerializedName("seats_available")
+    @Expose
+    private String seats_available;
 
     public StartingPoint getStartingPoint() {
         return startingPoint;
@@ -193,6 +196,13 @@ public class Schedule {
 
     public String getsStatus() {
         return sStatus;
+    }
+    public void setSeatsAvailable(String seats_available) {
+        this.seats_available = seats_available;
+    }
+
+    public String getSeatsAvailable() {
+        return seats_available;
     }
 
     public Bus getBus() {

@@ -76,7 +76,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         holder.dTime.setText(scheduleList.get(position).getTimeDeparture());
         holder.plateNo.setText(scheduleList.get(position).getBus().getPlateNumber());
         holder.fare.setText(Integer.toString(scheduleList.get(position).getFare()));
-        holder.seat.setText(Integer.toString(scheduleList.get(position).getBus().getCapacity()));
+        holder.seat.setText(scheduleList.get(position).getSeatsAvailable());
 //        holder.bind(schedule, listener);
     }
 
