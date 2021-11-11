@@ -3,6 +3,9 @@ package com.example.transporte_pay.utils;
 public final class Constants {
 //    public static final String BASE_URL = "http://192.168.100.25:80/api/";
 //    public static final String BASE_URL = "http://192.168.0.16:80/api/";
+//    public static final String BASE_URL = "http://192.168.18.9/api/";
+//    public static final String BASE_URL = "http://192.168.18.9:8000/api/";
+
     public static final String BASE_URL = "https://elizabethjoytransport.com/index.php/api/";
     public static final String LOGIN = "login";
     public static final String G_LOGIN = "google";
