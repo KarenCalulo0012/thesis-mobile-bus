@@ -28,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PassengerReport extends AppCompatActivity {
+public class PassengerReportActivity extends AppCompatActivity {
     DatePicker datePickerFrom;
     DatePicker datePickerTo;
     Button search;
@@ -56,18 +56,26 @@ public class PassengerReport extends AppCompatActivity {
 
         datePickerFrom = findViewById(R.id.editTextDateFrom);
         datePickerTo = findViewById(R.id.editTextDateTo);
-        search      = (Button)findViewById(R.id.search_btn);
+        search      = findViewById(R.id.search_btn);
+
         sessionManager = new SessionManager(getApplicationContext());
         sessionManager.checkLogin();
-
         HashMap<String, String> user = sessionManager.getUSerDetails();
         token = user.get(SessionManager.PREF_USER_TOKEN);
 
-        HashMap<String, Integer> userDetail = sessionManager.getID();
-        id = userDetail.get(SessionManager.ID);
-        roleId = userDetail.get(SessionManager.ROLE);
+
+        HashMap<String, Integer> ids = sessionManager.getID();
+        id = ids.get(SessionManager.ID);
+        roleId = ids.get(SessionManager.ROLE);
         passengerReportAdapter = new PassengerReportAdapter();
         conductorListAdapter   = new ConductorListAdapter();
+
+
+
+
+
+
+        conductorListAdapter = new ConductorListAdapter();
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,7 +139,7 @@ public class PassengerReport extends AppCompatActivity {
 //            public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
 //                if (response.isSuccessful()){
 //                    bookings = response.body().getBookings();
-//                    passengerReportAdapter.setBookingList(bookings, roleId,uFrom,uTo);
+//                    passengerReportAdapter.setBookingList(bookings, roleId);
 //                    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 //                    recyclerView.setAdapter(passengerReportAdapter);
 //                }
@@ -150,9 +158,9 @@ public class PassengerReport extends AppCompatActivity {
             public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
                 if (response.isSuccessful()){
                     bookings = response.body().getBookings();
-                    conductorListAdapter.setBookingList(bookings, roleId);
+                    passengerReportAdapter.setBookingList(bookings, roleId,uFrom,uTo);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    recyclerView.setAdapter(conductorListAdapter);
+                    recyclerView.setAdapter(passengerReportAdapter);
                 }
             }
 

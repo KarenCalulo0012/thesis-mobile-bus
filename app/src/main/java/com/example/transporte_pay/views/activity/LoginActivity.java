@@ -15,8 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.transporte_pay.R;
@@ -171,18 +174,22 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+
+
     private void getActivityResultLauncher() {
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
                 handleSignInResult(task);
                 Log.d("Response COde",String.valueOf(result.getResultCode()) );
-            }else{
-                
-                Toast.makeText(getApplicationContext(),"APi "+result.getResultCode(),Toast.LENGTH_LONG).show();
+            }else if(result.getResultCode() == Activity.RESULT_CANCELED){
+                Toast.makeText(getApplicationContext(),"Request Cancelled "+result.getResultCode(),Toast.LENGTH_LONG).show();
+                Log.e("Request Cancelled, Result Code: ",String.valueOf(result.getResultCode()) );
             }
+
         });
     }
+
 
     private void configGSignIn() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

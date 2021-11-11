@@ -16,7 +16,7 @@ import com.example.transporte_pay.R;
 import com.example.transporte_pay.utils.SessionManager;
 import com.example.transporte_pay.views.activity.BookingActivity;
 import com.example.transporte_pay.views.activity.ContactTraceActivity;
-import com.example.transporte_pay.views.activity.PassengerReport;
+import com.example.transporte_pay.views.activity.PassengerReportActivity;
 import com.example.transporte_pay.views.activity.ProfileActivity;
 import com.example.transporte_pay.views.activity.TravelLogsActivity;
 
@@ -93,7 +93,7 @@ public class PassengerDashboardFragment extends Fragment implements View.OnClick
             break;
             case R.id.report_card:
                 context = getActivity().getApplicationContext();
-                intent = new Intent(context, PassengerReport.class);
+                intent = new Intent(context, PassengerReportActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
                 break;

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".views.activity.PassengerReport">
+    tools:context=".views.activity.PassengerReportActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -84,7 +84,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/transLog_rv"
+        android:id="@+id/passengerTrans_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

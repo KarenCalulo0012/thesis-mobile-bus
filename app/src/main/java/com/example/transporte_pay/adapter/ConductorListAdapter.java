@@ -100,7 +100,10 @@ public class ConductorListAdapter extends RecyclerView.Adapter<ConductorListAdap
         if(sStatus.equals("open") )
         {
 //            Toast.makeText(context, sStatus, Toast.LENGTH_SHORT).show();
-            if(bookingList.get(position).getConductorId() == id)
+            String condId = bookingList.get(position).getConductorId().toString();
+            String uId = id.toString();
+
+            if(condId.equals(uId))
             {
                 name = bookingList.get(position).getUser().getName();
                 userId= String.valueOf(bookingList.get(position).getUser().getId());
