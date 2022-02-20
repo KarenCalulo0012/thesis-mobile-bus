@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-
+    android:orientation="vertical">>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,6 +36,65 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/startpoint_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Arrival"
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text=" - "
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/destination_point_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/black"
+                            android:text="Destination"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="₱"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="10"
+                        android:textDirection="rtl"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/fare_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Fare"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"
+                        android:textDirection="rtl"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -76,27 +133,9 @@
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="₱"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="10"
-                        android:textDirection="rtl"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/fare_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Fare"
-                        android:textColor="@color/black"
-                        android:layout_weight="1"
-                        android:textDirection="rtl"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -125,49 +164,17 @@
                             android:textStyle="bold"
                             android:textColor="@color/black"
                             android:text="Plate" />
+                    >
                         <TextView
                             android:id="@+id/seats_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="5dp"
-                            android:layout_weight="1"
-                            android:text="Seats "
+                            android:text="Capacity "
                             android:textColor="@color/black"
                             android:textStyle="bold"
-                            android:textDirection="rtl"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="Seats "
-                            android:textColor="@color/black"
                             android:textDirection="rtl" />
                     </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/lastView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="5dp"
-                        android:visibility="gone"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="Discount.: "
-                            android:textColor="@color/black"
 
-                            android:textDirection="ltr" />
-                        <TextView
-                            android:id="@+id/disc"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:text="₱100" />
-
-                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

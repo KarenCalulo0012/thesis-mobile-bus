@@ -4,8 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +28,7 @@ import com.example.transporte_pay.data.request.TransactionRequest;
 import com.example.transporte_pay.data.response.ScheduleResponse;
 import com.example.transporte_pay.utils.AlertDialogManager;
 import com.example.transporte_pay.utils.SessionManager;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -35,15 +41,17 @@ import retrofit2.Response;
 
 public class BusActivity extends AppCompatActivity {
     int uToID, uFromID, quantity = 1, uQuantity, uScheduleID, user_id;
-    String token, uDate, to, from, name;
+    String token, uDate, to, from, name,passenger_type_text;
     RecyclerView recyclerView;
-    TextView from_tv, to_tv, quantityNo;
+    TextView from_tv, to_tv, quantityNo,item_list;
     EditText date;
     ImageView plus, minus;
     SessionManager sessionManager;
     ScheduleAdapter scheduleAdapter;
     ArrayList<Schedule> schedules;
     AlertDialogManager alert;
+    TextInputLayout passenger_type;
+    AutoCompleteTextView drop_items;
     private ScheduleAdapter.RecyclerViewClickListener listener;
     public static final int ID_FOR_ADD_BOOKING = -1;
     public static final String DEFAULT_STATUS_FOR_ADD_BOOKING = "existing";
@@ -63,7 +71,10 @@ public class BusActivity extends AppCompatActivity {
         quantityNo = findViewById(R.id.quantity_tv);
         recyclerView = findViewById(R.id.ticketList_RV);
         scheduleAdapter = new ScheduleAdapter();
-
+        passenger_type = findViewById(R.id.drop_down);
+        passenger_type_text = "Normal";
+        drop_items     =  findViewById(R.id.drop_items);
+        item_list      = findViewById(R.id.textSuperView);
         alert = new AlertDialogManager();
         sessionManager = new SessionManager(getApplicationContext());
         sessionManager.checkLogin();
@@ -74,6 +85,31 @@ public class BusActivity extends AppCompatActivity {
 
         HashMap<String, Integer> ids = sessionManager.getID();
         user_id = ids.get(SessionManager.ID);
+
+        String[] items  ={"Normal","PWD","Senior","Student"};
+        ArrayAdapter<String> itemAdapter = new ArrayAdapter<>(BusActivity.this,R.layout.dropdown_item,items);
+        drop_items.setAdapter(itemAdapter);
+
+        drop_items.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                passenger_type_text = parent.getItemAtPosition(position).toString();
+
+
+                if(!passenger_type_text.equals("Normal")){
+                    alert.showAlertDialog(BusActivity.this,
+                            "PROOF OF PASSENGER",
+                            "PLEASE SEND PICTURE OF YOUR CARD AT : abc@elizabethjoytransport.com",
+                            true);
+                }
+
+                gotoSchedule();
+
+            }
+        });
+
+
+
 
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
@@ -127,7 +163,7 @@ public class BusActivity extends AppCompatActivity {
                     assert response.body() != null;
                     schedules = response.body().getSchedule();
                     setOnClickListener();
-                    scheduleAdapter.setData(schedules, listener);
+                    scheduleAdapter.setData(schedules, listener,passenger_type_text);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     recyclerView.setAdapter(scheduleAdapter);
                 }
@@ -150,6 +186,7 @@ public class BusActivity extends AppCompatActivity {
     }
 
     private void gotoConfirm() {
+
         TransactionRequest transactionRequest = new TransactionRequest();
         transactionRequest.setId(ID_FOR_ADD_BOOKING);
         transactionRequest.setScheduleID(uScheduleID);
@@ -160,11 +197,13 @@ public class BusActivity extends AppCompatActivity {
         transactionRequest.setDestination_id(uToID);
         transactionRequest.setSchedule_date(uDate);
         transactionRequest.setQuantity(quantity);
+        transactionRequest.setPassenger_type(passenger_type_text);
 
         Call<Booking> transCall = ApiClient.getBusClient().getTransaction(transactionRequest, "Bearer " + token);
         transCall.enqueue(new Callback<Booking>() {
             @Override
             public void onResponse(@NotNull Call<Booking> call, @NotNull Response<Booking> response) {
+
                 if (response.isSuccessful()) {
 //                    String getResponse = new Gson().toJson(response.body());
 //                    List<Routes> routesList = new ArrayList<>();

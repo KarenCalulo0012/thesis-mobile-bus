@@ -84,6 +84,15 @@
                     android:background="@drawable/round_border"
                     android:text="VIEW" />
                 <Button
+                    android:id="@+id/buttonRefund"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dip"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
+                    android:background="@drawable/round_border"
+                    android:text="VIEW" />
+                <Button
                     android:id="@+id/geobutton"
                     android:visibility="gone"
                     android:layout_width="wrap_content"

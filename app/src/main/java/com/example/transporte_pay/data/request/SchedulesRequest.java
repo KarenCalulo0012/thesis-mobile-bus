@@ -1,6 +1,6 @@
 package com.example.transporte_pay.data.request;
 
-public class ScheduleRequest {
+public class SchedulesRequest {
     private int starting_point_id;
     private int destination_id;
     private String schedule_date;

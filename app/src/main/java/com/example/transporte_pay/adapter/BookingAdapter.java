@@ -21,6 +21,7 @@ import com.example.transporte_pay.data.model.Booking;
 import com.example.transporte_pay.data.model.Status;
 import com.example.transporte_pay.views.activity.MapsActivity;
 import com.example.transporte_pay.views.activity.PaymentActivity;
+import com.example.transporte_pay.views.activity.RefundActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -40,7 +41,8 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView locations, date, status, name;
 
-        Button view,geo;
+
+        Button view,geo,refund;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -50,6 +52,8 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
             view = itemView.findViewById(R.id.button);
             geo = itemView.findViewById(R.id.geobutton);
             name = itemView.findViewById(R.id.passengerName_tv);
+            refund = itemView.findViewById(R.id.buttonRefund);
+            refund.setText("Refund");
         }
     }
 
@@ -66,15 +70,16 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
     @SuppressLint("StringFormatMatches")
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
-        String destination, start, locations, name,bus_gcash_number,longitude,latitude,platenumber;
+        String destination, start, locations, name,bus_gcash_number,longitude,latitude,platenumber,grand_total,id;
         int status,bus_id;
 
         if (roleId == 2) {
             holder.name.setVisibility(View.VISIBLE);
         }
-
+        id   = String.valueOf(bookingList.get(position).getId());
         name = bookingList.get(position).getUser().getName();
         status = bookingList.get(position).getStatus().getId();
+        grand_total = String.valueOf(bookingList.get(position).getGrandTotal());
         bus_gcash_number = bookingList.get(position).getBus().getGcashNumber();
         bus_id = bookingList.get(position).getBus().getId();
         latitude = bookingList.get(position).getBus().getLatitude();
@@ -87,9 +92,26 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
         destination = bookingList.get(position).getSchedule().getDestination().getName();
         start = bookingList.get(position).getSchedule().getStartingPoint().getName();
         locations = context.getString(R.string.locations, start, destination);
+
+        if(status == 2) {
+            holder.refund.setVisibility(View.VISIBLE);
+
+        }else{
+            holder.refund.setVisibility(View.GONE);
+        }
         if (status == 6) {
             holder.geo.setVisibility(View.VISIBLE);
         }
+        holder.refund.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, RefundActivity.class);
+                    intent.putExtra("fullname", name);
+                    intent.putExtra("amount", grand_total);
+                    intent.putExtra("booking_id", id);
+                    context.startActivity(intent);
+                }
+            });
         holder.locations.setText(locations);
         holder.date.setText(bookingList.get(position).getSchedule().getScheduleDate());
         holder.status.setText(bookingList.get(position).getStatus().getTitle());
@@ -131,10 +153,10 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
             }else if (status !=1){
                 bookingPay.setVisibility(View.GONE);
                 bookingCancel.setVisibility(View.GONE);
+
             }
 
             bookingPay.setOnClickListener(v13 -> {
-                Log.e("CLICK", "YOU CLICKED BOOKING PAY BUTTON");
                 Intent intent = new Intent(context, PaymentActivity.class);
                 intent.putExtra("busGcash", bus_gcash_number);
                 intent.putExtra("fullname", name);

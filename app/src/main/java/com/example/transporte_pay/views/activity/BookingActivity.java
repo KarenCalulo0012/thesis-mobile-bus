@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.transporte_pay.R;
 import com.example.transporte_pay.data.api.ApiClient;
@@ -26,9 +27,14 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,6 +54,7 @@ public class BookingActivity extends AppCompatActivity{
     Button bookings;
     private final ArrayList<String> destinationList = new ArrayList<>();
     private final ArrayList<String> StartingPointList = new ArrayList<>();
+    public static final String DATE_FORMAT = "yyyy-mm-dd";  //or use "M/d/yyyy"
 
     @SuppressLint("DefaultLocale")
     @Override
@@ -71,17 +78,50 @@ public class BookingActivity extends AppCompatActivity{
 
 
             uDate = year + "-" + monthPadded + "-" + dayPadded;
-            Log.e("DATE", "********** DATE: " + uDate);
-            Log.e("LOCATIONS", "********** FROM: "+ uFrom + "  TO: " + uTo);
-            Log.e("IDS", "********** FROM ID: "+ uFromID + "  TO ID: " + uToID);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String currentDate = sdf.format(new Date());
+            Date startDate, endDate;
+            try {
 
-            Intent intent = new Intent(BookingActivity.this, BusActivity.class)
-                    .putExtra("fromID", uFromID)
-                    .putExtra("toID", uToID)
-                    .putExtra("from", uFrom)
-                    .putExtra("to", uTo)
-                    .putExtra("date", uDate);
-            startActivity(intent);
+                startDate =  sdf.parse(currentDate);
+                endDate = sdf.parse(uDate);
+                long numDays = getUnitBetweenDates(startDate, endDate, TimeUnit.DAYS);
+                String da    = Long.toString(numDays);
+
+                if(numDays == 0){
+                    alert.showAlertDialog(BookingActivity.this,
+                            "SEARCH FAILED ",
+                            "Sorry ! Please select 2 days prior for booking",
+                            false);
+                }else if(numDays <= -1){
+//
+                    alert.showAlertDialog(BookingActivity.this,
+                            "SEARCH FAILED ",
+                            "Sorry ! Please select 2 days prior for booking",
+                            false);
+                }else{
+
+//                    Log.e("DATE", "********** DATE: " + uDate);
+//                    Log.e("LOCATIONS", "********** FROM: "+ uFrom + "  TO: " + uTo);
+//                    Log.e("IDS", "********** FROM ID: "+ uFromID + "  TO ID: " + uToID);
+
+                    Intent intent = new Intent(BookingActivity.this, BusActivity.class)
+                            .putExtra("fromID", uFromID)
+                            .putExtra("toID", uToID)
+                            .putExtra("from", uFrom)
+                            .putExtra("to", uTo)
+                            .putExtra("date", uDate);
+                    startActivity(intent);
+                }
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
+
+
+
         });
 
         alert = new AlertDialogManager();
@@ -95,6 +135,10 @@ public class BookingActivity extends AppCompatActivity{
 
         getBusRoutes();
 
+    }
+    private static long getUnitBetweenDates(Date startDate, Date endDate, TimeUnit unit) {
+        long timeDiff = endDate.getTime() - startDate.getTime();
+        return unit.convert(timeDiff, TimeUnit.MILLISECONDS);
     }
 
     private void getBusRoutes() {

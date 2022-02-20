@@ -20,6 +20,8 @@ public class PaymentRequest {
     private File image;
     @SerializedName("image_name")
     private String Title;
+    @SerializedName("reason")
+    private String reason;
 
 //    @SerializedName("image")
 //    private String Image;
@@ -71,6 +73,14 @@ public class PaymentRequest {
 
     public void setImage(File image) {
         this.image = image;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
 
