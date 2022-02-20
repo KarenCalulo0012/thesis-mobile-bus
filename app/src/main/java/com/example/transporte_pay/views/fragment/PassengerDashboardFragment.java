@@ -18,12 +18,13 @@ import com.example.transporte_pay.views.activity.BookingActivity;
 import com.example.transporte_pay.views.activity.ContactTraceActivity;
 import com.example.transporte_pay.views.activity.PassengerReportActivity;
 import com.example.transporte_pay.views.activity.ProfileActivity;
+import com.example.transporte_pay.views.activity.ScheduleActivity;
 import com.example.transporte_pay.views.activity.TravelLogsActivity;
 
 public class PassengerDashboardFragment extends Fragment implements View.OnClickListener{
     private String message;
     public TextView text;
-    CardView card1, card2, card3 , card4 ,card5;
+    CardView card1, card2, card3 , card4 ,card5,card6;
     SessionManager sessionManager;
 
 
@@ -44,11 +45,13 @@ public class PassengerDashboardFragment extends Fragment implements View.OnClick
         card3 = view.findViewById(R.id.account_card);
         card4 = view.findViewById(R.id.covid_card);
         card5 = view.findViewById(R.id.report_card);
+        card6 = view.findViewById(R.id.sc_card);
         card1.setOnClickListener(this);
         card2.setOnClickListener(this);
         card3.setOnClickListener(this);
         card4.setOnClickListener(this);
         card5.setOnClickListener(this);
+        card6.setOnClickListener(this);
 
         Bundle data = getArguments();
 
@@ -94,6 +97,12 @@ public class PassengerDashboardFragment extends Fragment implements View.OnClick
             case R.id.report_card:
                 context = getActivity().getApplicationContext();
                 intent = new Intent(context, PassengerReportActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+                break;
+            case R.id.sc_card:
+                context = getActivity().getApplicationContext();
+                intent = new Intent(context, ScheduleActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
                 break;

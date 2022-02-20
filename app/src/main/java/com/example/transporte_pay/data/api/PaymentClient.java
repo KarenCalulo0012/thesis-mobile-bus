@@ -36,6 +36,9 @@ public interface PaymentClient {
     @POST(Constants.PAYMENT_UPLOAD)
     Call<PaymentRequest> uploadImage(@Body PaymentRequest paymentRequest , @Header("Authorization") String auth);
 
+    @POST(Constants.PAYMENT_REFUND)
+    Call<PaymentRequest> paymentRefund(@Body PaymentRequest paymentRequest , @Header("Authorization") String auth);
+
     @Multipart
     @POST(Constants.PAYMENT_UPLOAD)
     Call<PaymentRequestForImage> uploadImages(@Body PaymentRequestForImage paymentRequestForImage,@Header("Authorization") String auth);

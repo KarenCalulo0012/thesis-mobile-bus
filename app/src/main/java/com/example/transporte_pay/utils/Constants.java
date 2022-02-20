@@ -17,10 +17,14 @@ public final class Constants {
 
     public static final String BUS_ROUTES = "buses/bookings/step/one";
     public static final String BUS_ROUTES2 = "buses/bookings/step/two";
+    public static final String BUS_ROUTES3 = "buses/bookings/step/three";
+    public static final String BUS_ROUTES4 = "buses/bookings/step/four";
     public static final String BUS_CONFIRM = "buses/bookings/confirm";
     public static final String BUS_GPS = "buses/gps";
     public static final String PAYMENT_UPLOAD = "bookings/payment";
     public static final String CONDUCTOR_BUS = "bookings/conductorbus";
+    public static final String PAYMENT_REFUND = "bookings/refund";
+    public static final String SCHEDULE_DATA = "buses/bookings/scheduleData";
 
 
 }

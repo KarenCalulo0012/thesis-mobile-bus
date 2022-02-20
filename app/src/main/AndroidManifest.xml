@@ -29,6 +29,9 @@
         tools:ignore="AllowBackup"
         tools:targetApi="m">
         <activity
+            android:name=".views.activity.ScheduleActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.activity.PassengerReportActivity"
             android:exported="true" />
         <activity
@@ -54,6 +57,7 @@
             android:name=".views.activity.MapsActivity"
             android:exported="true"
             android:label="@string/title_activity_maps" />
+        <activity android:name=".views.activity.RefundActivity" />
         <activity android:name=".views.activity.PassengerActivity" />
         <activity android:name=".views.activity.ContactTraceActivity" />
         <activity android:name=".views.activity.PaymentActivity" />

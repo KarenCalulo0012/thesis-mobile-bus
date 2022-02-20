@@ -37,6 +37,14 @@
     <string name="referencenumber">Ref#</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="title_activity_conductor_maps">ConductorMapsActivity</string>
+    <string name="money">Amount Paid</string>
+    <string name="reason">Reason</string>
+    <string-array name="passenger_type_array">
+        <item>Normal</item>
+        <item>PWD</item>
+        <item>Student</item>
+        <item>Senior</item>
+    </string-array>
 
     //
 

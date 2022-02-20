@@ -15,6 +15,8 @@ public class TransactionRequest {
     private int quantity;
     private String from;
     private String to;
+    private String passenger_type;
+
 
     public int getScheduleID() {
         return scheduleID;
@@ -103,4 +105,13 @@ public class TransactionRequest {
     public void setTo(String to) {
         this.to = to;
     }
+
+    public String getPassenger_type() {
+        return passenger_type;
+    }
+
+    public void setPassenger_type(String passenger_type) {
+        this.passenger_type = passenger_type;
+    }
+
 }
