@@ -47,7 +47,7 @@ public class ScheduleDataAdpater extends RecyclerView.Adapter<ScheduleDataAdpate
         notifyDataSetChanged();
     }
 public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    TextView aTime, dTime, plateNo, capacity, fare,startingPoint,destinationPoint;
+    TextView aTime, dTime, plateNo, capacity, fare,startingPoint,destinationPoint,scDate;
 
     public ViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
@@ -58,7 +58,7 @@ public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         plateNo = (TextView) itemView.findViewById(R.id.plateNo_tv);
         capacity = (TextView) itemView.findViewById(R.id.seats_tv);
         fare = (TextView) itemView.findViewById(R.id.fare_tv);
-
+        scDate = (TextView) itemView.findViewById(R.id.scDate_tv);
         itemView.setOnClickListener(this);
     }
 
@@ -89,7 +89,7 @@ public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         holder.plateNo.setText(schedulesList.get(position).getPlateNumber());
         holder.fare.setText(Integer.toString(schedulesList.get(position).getFare()));
         holder.capacity.setText("Seats : "+Integer.toString(schedulesList.get(position).getCapacity()));
-
+        holder.scDate.setText(schedulesList.get(position).getScheduleDate());
 
 
     }

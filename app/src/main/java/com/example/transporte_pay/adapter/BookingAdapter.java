@@ -93,12 +93,14 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
         start = bookingList.get(position).getSchedule().getStartingPoint().getName();
         locations = context.getString(R.string.locations, start, destination);
 
-        if(status == 2) {
-            holder.refund.setVisibility(View.VISIBLE);
+        if(status == 13 || status == 1 || status == 4 || status == 12) {
+            holder.refund.setVisibility(View.GONE);
 
         }else{
-            holder.refund.setVisibility(View.GONE);
+            holder.refund.setVisibility(View.VISIBLE);
         }
+
+
         if (status == 6) {
             holder.geo.setVisibility(View.VISIBLE);
         }
