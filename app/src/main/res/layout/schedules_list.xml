@@ -132,8 +132,20 @@
                             android:text="Time"
                             android:textSize="16sp"
                             android:textStyle="bold" />
+
                     </LinearLayout>
 
+
+                    <TextView
+                        android:id="@+id/scDate_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Date"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"
+                        android:textDirection="rtl"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>
