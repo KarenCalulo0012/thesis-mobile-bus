@@ -2,8 +2,10 @@ package com.example.transporte_pay.utils;
 
 public final class Constants {
 //    public static final String BASE_URL = "http://192.168.100.25:80/api/";
+//    public static final String BASE_URL = "http://192.168.0.16:80/api/";
 //    public static final String BASE_URL = "http://192.168.18.9/api/";
 //    public static final String BASE_URL = "http://192.168.18.9:8000/api/";
+
     public static final String BASE_URL = "https://elizabethjoytransport.com/index.php/api/";
     public static final String LOGIN = "login";
     public static final String G_LOGIN = "google";
@@ -18,7 +20,7 @@ public final class Constants {
     public static final String BUS_ROUTES3 = "buses/bookings/step/three";
     public static final String BUS_ROUTES4 = "buses/bookings/step/four";
     public static final String BUS_CONFIRM = "buses/bookings/confirm";
-    public static final String BUS_GPS = "buses/gps/";
+    public static final String BUS_GPS = "buses/gps";
     public static final String PAYMENT_UPLOAD = "bookings/payment";
     public static final String CONDUCTOR_BUS = "bookings/conductorbus";
     public static final String PAYMENT_REFUND = "bookings/refund";

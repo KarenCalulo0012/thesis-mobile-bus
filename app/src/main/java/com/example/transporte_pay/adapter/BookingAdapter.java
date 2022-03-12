@@ -99,6 +99,8 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
         }else{
             holder.refund.setVisibility(View.VISIBLE);
         }
+
+
         if (status == 6) {
             holder.geo.setVisibility(View.VISIBLE);
         }
