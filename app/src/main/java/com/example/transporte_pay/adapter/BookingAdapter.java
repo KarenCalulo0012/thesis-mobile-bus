@@ -39,7 +39,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
         notifyDataSetChanged();
     }
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView locations, date, status, name;
+        TextView locations, date, status, name,busPlate_tv,passengerType_tv;
 
 
         Button view,geo,refund;
@@ -52,7 +52,9 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
             view = itemView.findViewById(R.id.button);
             geo = itemView.findViewById(R.id.geobutton);
             name = itemView.findViewById(R.id.passengerName_tv);
+            busPlate_tv = itemView.findViewById(R.id.busPlate_tv);
             refund = itemView.findViewById(R.id.buttonRefund);
+            passengerType_tv = itemView.findViewById(R.id.passengerType_tv);
             refund.setText("Refund");
         }
     }
@@ -70,7 +72,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
     @SuppressLint("StringFormatMatches")
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
-        String destination, start, locations, name,bus_gcash_number,longitude,latitude,platenumber,grand_total,id;
+        String destination, start, locations, name,bus_gcash_number,longitude,latitude,platenumber,grand_total,id,scDate,passenger_type;
         int status,bus_id;
 
         if (roleId == 2) {
@@ -84,6 +86,8 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
         bus_id = bookingList.get(position).getBus().getId();
         latitude = bookingList.get(position).getBus().getLatitude();
         longitude = bookingList.get(position).getBus().getLongitude();
+        scDate = bookingList.get(position).getSchedule().getScheduleDate();
+        passenger_type = bookingList.get(position).getPassenger_type();
         Log.d("Longitude",longitude);
         Log.d("Longitude",latitude);
 
@@ -106,20 +110,46 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
         if (status == 6) {
             holder.geo.setVisibility(View.VISIBLE);
         }
+
+        if(roleId == 3){
+            holder.passengerType_tv.setVisibility(View.VISIBLE);
+
+        }
+        if(roleId == 4){
+            holder.busPlate_tv.setVisibility(View.VISIBLE);
+        }
         holder.refund.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, RefundActivity.class);
-                    intent.putExtra("fullname", name);
-                    intent.putExtra("amount", grand_total);
-                    intent.putExtra("booking_id", id);
-                    context.startActivity(intent);
+                    AlertDialog.Builder builderNew = new AlertDialog.Builder(v.getRootView().getContext());
+
+                    View dialogView1 = LayoutInflater.from(v.getRootView().getContext())
+                            .inflate(R.layout.refund_dialog, null);
+                    Button proceedRefund;
+                    proceedRefund = dialogView1.findViewById(R.id.cancel_book_btn);
+                    builderNew.setView(dialogView1)
+                            .setCancelable(true)
+                            .show();
+
+                    proceedRefund.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(context, RefundActivity.class);
+                            intent.putExtra("fullname", name);
+                            intent.putExtra("amount", grand_total);
+                            intent.putExtra("booking_id", id);
+                            intent.putExtra("scDate",scDate);
+                            context.startActivity(intent);
+                        }
+                    });
+
                 }
             });
         holder.locations.setText(locations);
         holder.date.setText(bookingList.get(position).getSchedule().getScheduleDate());
         holder.status.setText(bookingList.get(position).getStatus().getTitle());
-
+        holder.busPlate_tv.setText(platenumber);
+        holder.passengerType_tv.setText(passenger_type);
         holder.view.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
             View dialogView = LayoutInflater.from(v.getRootView().getContext())
@@ -138,6 +168,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
 
             bookingPay = dialogView.findViewById(R.id.payment_btn);
             bookingCancel = dialogView.findViewById(R.id.cancel_btn);
+
 
             //SET DATA
             String a, b, c;
@@ -174,6 +205,8 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
             builder.setView(dialogView)
                     .setCancelable(true)
                     .show();
+
+
         });
         
         holder.geo.setOnClickListener(new View.OnClickListener() {
@@ -184,6 +217,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
                 intent.putExtra("latitude", latitude.trim());
                 intent.putExtra("fullname", name);
                 intent.putExtra("platenumber", platenumber);
+
                 context.startActivity(intent);
             }
         });

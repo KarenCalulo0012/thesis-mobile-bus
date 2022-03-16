@@ -60,6 +60,24 @@
                     android:text="Date"
                     />
                 <TextView
+                    android:id="@+id/busPlate_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:visibility="visible"
+                    android:text="Bus Plate Number"
+                    />
+                <TextView
+                    android:id="@+id/passengerType_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:text="Passenger Type"
+                    android:visibility="visible"
+                    />
+                <TextView
                     android:id="@+id/status_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

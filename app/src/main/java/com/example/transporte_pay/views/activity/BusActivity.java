@@ -3,6 +3,7 @@ package com.example.transporte_pay.views.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -41,10 +42,10 @@ import retrofit2.Response;
 
 public class BusActivity extends AppCompatActivity {
     int uToID, uFromID, quantity = 1, uQuantity, uScheduleID, user_id;
-    String token, uDate, to, from, name,passenger_type_text;
+    String token, uDate, to, from, name,passenger_type_text,availableSeat;
     RecyclerView recyclerView;
     TextView from_tv, to_tv, quantityNo,item_list;
-    EditText date;
+    EditText date,idNumber;
     ImageView plus, minus;
     SessionManager sessionManager;
     ScheduleAdapter scheduleAdapter;
@@ -75,6 +76,7 @@ public class BusActivity extends AppCompatActivity {
         passenger_type_text = "Normal";
         drop_items     =  findViewById(R.id.drop_items);
         item_list      = findViewById(R.id.textSuperView);
+        idNumber       = findViewById(R.id.idNumber_tv);
         alert = new AlertDialogManager();
         sessionManager = new SessionManager(getApplicationContext());
         sessionManager.checkLogin();
@@ -97,17 +99,29 @@ public class BusActivity extends AppCompatActivity {
 
 
                 if(!passenger_type_text.equals("Normal")){
-                    alert.showAlertDialog(BusActivity.this,
-                            "PROOF OF PASSENGER",
-                            "PLEASE SEND PICTURE OF YOUR CARD AT : abc@elizabethjoytransport.com",
-                            true);
+                    idNumber.setHint(passenger_type_text+" ID NUMBER :");
+                    idNumber.setVisibility(View.VISIBLE);
+
+
+
+                }else{
+
+                    gotoSchedule();
                 }
 
-                gotoSchedule();
 
             }
         });
-
+        if (TextUtils.isEmpty(idNumber.getText().toString()) ){
+            // user didn't entered username or password
+            // Show alert asking him to enter the details
+            alert.showAlertDialog(BusActivity.this,
+                    "ID NUMBER ..",
+                    "Please enter ID Number",
+                    false);
+        }else {
+            gotoSchedule();
+        }
 
 
 
@@ -178,10 +192,19 @@ public class BusActivity extends AppCompatActivity {
 
     private void setOnClickListener() {
         listener = (v, position) -> {
-            uScheduleID = schedules.get(position).getId();
+           uScheduleID = schedules.get(position).getId();
             uQuantity = quantity;
+            availableSeat = schedules.get(position).getSeatsAvailable();
 
+
+        if(Integer.valueOf(availableSeat) <=0){
+            alert.showAlertDialog(BusActivity.this,
+                    "BOOKING STATUS",
+                    "No Available Seats ",
+                    false);
+        }else{
             gotoConfirm();
+        }
         };
     }
 

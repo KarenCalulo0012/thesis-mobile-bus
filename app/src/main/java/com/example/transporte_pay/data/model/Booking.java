@@ -64,6 +64,9 @@ public class Booking {
     @SerializedName("lat")
     @Expose
     private String latitude;
+    @Expose
+    private String passenger_type;
+    @SerializedName("passenger_type")
 
 
     public Integer getId() {
@@ -160,6 +163,13 @@ public class Booking {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+    public String getPassenger_type() {
+        return passenger_type;
+    }
+
+    public void setPassenger_type(String passenger_type) {
+        this.passenger_type = passenger_type;
     }
 
     public Object getDeletedAt() {

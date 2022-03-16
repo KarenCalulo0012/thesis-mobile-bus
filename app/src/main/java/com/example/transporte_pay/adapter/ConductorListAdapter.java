@@ -54,7 +54,7 @@ public class ConductorListAdapter extends RecyclerView.Adapter<ConductorListAdap
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView locations, date, status, name;
+        TextView locations, date, status, name,passengerType_tv,busPlate_tv;
         LinearLayout linearLayout;
 
         Button view,geo;
@@ -67,6 +67,9 @@ public class ConductorListAdapter extends RecyclerView.Adapter<ConductorListAdap
             view = itemView.findViewById(R.id.button);
             geo = itemView.findViewById(R.id.geobutton);
             name = itemView.findViewById(R.id.passengerName_tv);
+
+            busPlate_tv = itemView.findViewById(R.id.busPlate_tv);
+            passengerType_tv = itemView.findViewById(R.id.passengerType_tv);
             linearLayout=itemView.findViewById(R.id.box);
 
         }
@@ -89,7 +92,7 @@ public class ConductorListAdapter extends RecyclerView.Adapter<ConductorListAdap
     @SuppressLint("StringFormatMatches")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String destination, start, locations, name,bus_gcash_number,longitude,latitude,platenumber,sStatus,userId,bookingId;
+        String destination, start, locations, name,bus_gcash_number,longitude,latitude,platenumber,sStatus,userId,bookingId,passenger_type;
         int status,bus_id;
 
         if (roleId == 2) {
@@ -118,6 +121,7 @@ public class ConductorListAdapter extends RecyclerView.Adapter<ConductorListAdap
                 holder.name.setText(name);
                 destination = bookingList.get(position).getSchedule().getDestination().getName();
                 start = bookingList.get(position).getSchedule().getStartingPoint().getName();
+                passenger_type = bookingList.get(position).getPassenger_type();
                 locations = context.getString(R.string.locations, start, destination);
                 if (status == 3 ) {
                     holder.geo.setText("Verify");
@@ -126,6 +130,8 @@ public class ConductorListAdapter extends RecyclerView.Adapter<ConductorListAdap
                 holder.locations.setText(locations);
                 holder.date.setText(bookingList.get(position).getSchedule().getScheduleDate());
                 holder.status.setText(bookingList.get(position).getStatus().getTitle());
+                holder.busPlate_tv.setText(platenumber);
+                holder.passengerType_tv.setText(passenger_type);
 
                 holder.view.setOnClickListener(v -> {
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());

@@ -25,7 +25,11 @@ import com.example.transporte_pay.utils.SessionManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,7 +39,7 @@ public class RefundActivity extends AppCompatActivity {
 
     EditText fullName,amountPaid,reason;
     Button save,back;
-    String token,amount_paid,full_name,reason_refund,booking_id;
+    String token,amount_paid,full_name,reason_refund,booking_id,scDate;
     SessionManager sessionManager;
     AlertDialogManager alert;
     @Override
@@ -60,6 +64,7 @@ public class RefundActivity extends AppCompatActivity {
             full_name = (String) extras.getString("fullname");
             booking_id = (String)extras.getString("booking_id");
             amount_paid = (String) extras.getString("amount");
+            scDate      = (String) extras.get("scDate");
         }
 
         fullName.setEnabled(false);
@@ -93,7 +98,7 @@ public class RefundActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent backIntent = new Intent(getApplicationContext(),BookingActivity.class);
+                Intent backIntent = new Intent(getApplicationContext(),TravelLogsActivity.class);
                 startActivity(backIntent);
             }
         });
@@ -103,12 +108,39 @@ public class RefundActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent backIntent = new Intent(getApplicationContext(),BookingActivity.class);
+        Intent backIntent = new Intent(getApplicationContext(),TravelLogsActivity.class);
         startActivity(backIntent);
     }
 
+    private static long getUnitBetweenDates(Date startDate, Date endDate, TimeUnit unit) {
+        long timeDiff = endDate.getTime() - startDate.getTime();
+        return unit.convert(timeDiff, TimeUnit.MILLISECONDS);
+    }
 
     private void refundBooking(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDate = sdf.format(new Date());
+        Date startDate, endDate;
+        try {
+
+            startDate =  sdf.parse(currentDate);
+            endDate = sdf.parse(scDate);
+            long numDays = getUnitBetweenDates(startDate, endDate, TimeUnit.DAYS);
+            String da    = Long.toString(numDays);
+
+            if(numDays >= 0){
+
+                reason_refund = reason_refund+"=yes";
+
+            }else{
+
+                reason_refund = reason_refund+"=no";
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
 
         PaymentRequest paymentRequest = new PaymentRequest();
         paymentRequest.setItemId(booking_id);

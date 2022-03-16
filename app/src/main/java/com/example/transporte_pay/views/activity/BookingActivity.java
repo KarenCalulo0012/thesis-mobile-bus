@@ -88,22 +88,13 @@ public class BookingActivity extends AppCompatActivity{
                 long numDays = getUnitBetweenDates(startDate, endDate, TimeUnit.DAYS);
                 String da    = Long.toString(numDays);
 
-                if(numDays == 0){
+                if(numDays<= 1){
                     alert.showAlertDialog(BookingActivity.this,
                             "SEARCH FAILED ",
                             "Sorry ! Please select 2 days prior for booking",
                             false);
-                }else if(numDays <= -1){
-//
-                    alert.showAlertDialog(BookingActivity.this,
-                            "SEARCH FAILED ",
-                            "Sorry ! Please select 2 days prior for booking",
-                            false);
-                }else{
 
-//                    Log.e("DATE", "********** DATE: " + uDate);
-//                    Log.e("LOCATIONS", "********** FROM: "+ uFrom + "  TO: " + uTo);
-//                    Log.e("IDS", "********** FROM ID: "+ uFromID + "  TO ID: " + uToID);
+                }else{
 
                     Intent intent = new Intent(BookingActivity.this, BusActivity.class)
                             .putExtra("fromID", uFromID)

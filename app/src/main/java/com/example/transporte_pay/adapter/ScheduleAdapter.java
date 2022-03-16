@@ -70,7 +70,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         context = parent.getContext();
 
         return new ScheduleAdapter.ViewHolder(LayoutInflater.from(context)
-                .inflate(R.layout.schedule_list,parent,false));
+                .inflate(R.layout.schedules_list,parent,false));
     }
 
     @Override

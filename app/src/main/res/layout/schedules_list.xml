@@ -134,16 +134,7 @@
                             android:textStyle="bold" />
 
                     </LinearLayout>
-                    <TextView
-                        android:id="@+id/scDate_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Date"
-                        android:textColor="@color/black"
-                        android:layout_weight="1"
-                        android:textDirection="rtl"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+
 
 
                     <TextView
@@ -195,6 +186,38 @@
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:textDirection="rtl" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Seats "
+                            android:textColor="@color/black"
+                            android:textDirection="rtl" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/lastView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"
+                        android:visibility="gone"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Discount.: "
+                            android:textColor="@color/black"
+
+                            android:textDirection="ltr" />
+                        <TextView
+                            android:id="@+id/disc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:text="₱100" />
+
                     </LinearLayout>
 
                 </LinearLayout>

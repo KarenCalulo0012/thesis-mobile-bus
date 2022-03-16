@@ -9,7 +9,7 @@
     <View
         android:id="@+id/topview"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="300dp"
         android:background="#000B76"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -156,6 +156,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
+            android:layout_marginBottom="10dp"
+            app:boxCornerRadiusBottomEnd="25dp"
+            app:boxCornerRadiusBottomStart="25dp"
+            app:boxCornerRadiusTopEnd="25dp"
+            app:boxCornerRadiusTopStart="25dp"
+            android:hint="Passenger Type"
+            android:textColorHint="@color/white"
             >
             <AutoCompleteTextView
                 android:id="@+id/drop_items"
@@ -165,6 +172,23 @@
                 android:inputType="none"
                 />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <EditText
+            android:id="@+id/idNumber_tv"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="42dp"
+            android:layout_marginEnd="42dp"
+
+            app:boxCornerRadiusBottomEnd="25dp"
+            app:boxCornerRadiusBottomStart="25dp"
+            app:boxCornerRadiusTopEnd="25dp"
+            app:boxCornerRadiusTopStart="25dp"
+            android:background="@drawable/ic_email"
+            android:textColor="@color/white"
+            android:visibility="gone"
+           />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
