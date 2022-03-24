@@ -3,7 +3,9 @@ package com.example.transporte_pay.views.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -105,23 +107,37 @@ public class BusActivity extends AppCompatActivity {
 
 
                 }else{
-
+                    idNumber.setVisibility(View.INVISIBLE);
                     gotoSchedule();
                 }
 
 
             }
         });
-        if (TextUtils.isEmpty(idNumber.getText().toString()) ){
-            // user didn't entered username or password
-            // Show alert asking him to enter the details
-            alert.showAlertDialog(BusActivity.this,
-                    "ID NUMBER ..",
-                    "Please enter ID Number",
-                    false);
-        }else {
-            gotoSchedule();
-        }
+
+        idNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s == null || s.length() <= 7 || s.length() >= 10) {
+//                    tv.setText("Invalid length, should be from 7 to 10 characters. Please check your code");
+                    Toast.makeText(BusActivity.this,"Invalid length, should be from 7 to 10 characters. Please check your code",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(BusActivity.this,String.valueOf(s),Toast.LENGTH_SHORT).show();
+                }else{
+                    if ( s.length() < 7 && s.length() > 10) {
+                        gotoSchedule();
+                    }
+                }
+
+            }
+        });
 
 
 
@@ -203,12 +219,31 @@ public class BusActivity extends AppCompatActivity {
                     "No Available Seats ",
                     false);
         }else{
-            gotoConfirm();
+            if(passenger_type_text.equals("Normal")){
+                gotoConfirm();
+            }else{
+                if((idNumber.getText().toString().length() >= 7) && (idNumber.getText().toString().length() <=10) ){
+                    gotoConfirm();
+                }else{
+                    alert.showAlertDialog(BusActivity.this,
+                            "ID NUMBER ..",
+                            "Please enter ID Number or Invalid length, should be from 7 to 10 characters. Please check your code",
+                            false);
+                }
+            }
         }
+
+
+
         };
     }
 
     private void gotoConfirm() {
+
+
+
+        Toast.makeText(BusActivity.this,name,Toast.LENGTH_SHORT).show();
+
 
         TransactionRequest transactionRequest = new TransactionRequest();
         transactionRequest.setId(ID_FOR_ADD_BOOKING);
@@ -221,6 +256,10 @@ public class BusActivity extends AppCompatActivity {
         transactionRequest.setSchedule_date(uDate);
         transactionRequest.setQuantity(quantity);
         transactionRequest.setPassenger_type(passenger_type_text);
+        if(!passenger_type_text.equals("Normal")){
+            transactionRequest.setId_number(idNumber.getText().toString());
+        }
+
 
         Call<Booking> transCall = ApiClient.getBusClient().getTransaction(transactionRequest, "Bearer " + token);
         transCall.enqueue(new Callback<Booking>() {

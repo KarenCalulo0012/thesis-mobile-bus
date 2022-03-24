@@ -92,7 +92,7 @@ public class ConductorListAdapter extends RecyclerView.Adapter<ConductorListAdap
     @SuppressLint("StringFormatMatches")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String destination, start, locations, name,bus_gcash_number,longitude,latitude,platenumber,sStatus,userId,bookingId,passenger_type;
+        String destination, start, locations, name,bus_gcash_number,longitude,latitude,platenumber,sStatus,userId,bookingId,passenger_type,id_number;
         int status,bus_id;
 
         if (roleId == 2) {
@@ -122,6 +122,7 @@ public class ConductorListAdapter extends RecyclerView.Adapter<ConductorListAdap
                 destination = bookingList.get(position).getSchedule().getDestination().getName();
                 start = bookingList.get(position).getSchedule().getStartingPoint().getName();
                 passenger_type = bookingList.get(position).getPassenger_type();
+                id_number      = bookingList.get(position).getId_number();
                 locations = context.getString(R.string.locations, start, destination);
                 if (status == 3 ) {
                     holder.geo.setText("Verify");
@@ -131,7 +132,7 @@ public class ConductorListAdapter extends RecyclerView.Adapter<ConductorListAdap
                 holder.date.setText(bookingList.get(position).getSchedule().getScheduleDate());
                 holder.status.setText(bookingList.get(position).getStatus().getTitle());
                 holder.busPlate_tv.setText(platenumber);
-                holder.passengerType_tv.setText(passenger_type);
+                holder.passengerType_tv.setText(passenger_type+" "+id_number);
 
                 holder.view.setOnClickListener(v -> {
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());

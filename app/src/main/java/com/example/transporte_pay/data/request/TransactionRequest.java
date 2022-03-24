@@ -16,6 +16,7 @@ public class TransactionRequest {
     private String from;
     private String to;
     private String passenger_type;
+    private String id_number;
 
 
     public int getScheduleID() {
@@ -112,6 +113,14 @@ public class TransactionRequest {
 
     public void setPassenger_type(String passenger_type) {
         this.passenger_type = passenger_type;
+    }
+
+    public String getId_number() {
+        return id_number;
+    }
+
+    public void setId_number(String id_number) {
+        this.id_number = id_number;
     }
 
 }
