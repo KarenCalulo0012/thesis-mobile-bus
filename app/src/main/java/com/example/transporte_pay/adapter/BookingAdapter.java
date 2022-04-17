@@ -90,6 +90,9 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
         passenger_type = bookingList.get(position).getPassenger_type();
         Log.d("Longitude",longitude);
         Log.d("Longitude",latitude);
+        if(passenger_type.equals("Normal") || passenger_type.equals("normal")){
+            passenger_type="Ordinary";
+        }
 
         platenumber = bookingList.get(position).getBus().getPlateNumber();
         holder.name.setText(name);

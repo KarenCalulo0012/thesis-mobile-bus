@@ -75,7 +75,8 @@ public class BusActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.ticketList_RV);
         scheduleAdapter = new ScheduleAdapter();
         passenger_type = findViewById(R.id.drop_down);
-        passenger_type_text = "Normal";
+//        passenger_type_text = "Normal";
+        passenger_type_text = "Ordinary";
         drop_items     =  findViewById(R.id.drop_items);
         item_list      = findViewById(R.id.textSuperView);
         idNumber       = findViewById(R.id.idNumber_tv);
@@ -90,7 +91,8 @@ public class BusActivity extends AppCompatActivity {
         HashMap<String, Integer> ids = sessionManager.getID();
         user_id = ids.get(SessionManager.ID);
 
-        String[] items  ={"Normal","PWD","Senior","Student"};
+//        String[] items  ={"Normal","PWD","Senior","Student"};
+        String[] items  ={"Ordinary","PWD","Senior","Student"};
         ArrayAdapter<String> itemAdapter = new ArrayAdapter<>(BusActivity.this,R.layout.dropdown_item,items);
         drop_items.setAdapter(itemAdapter);
 
@@ -100,7 +102,7 @@ public class BusActivity extends AppCompatActivity {
                 passenger_type_text = parent.getItemAtPosition(position).toString();
 
 
-                if(!passenger_type_text.equals("Normal")){
+                if(!passenger_type_text.equals("Ordinary")){
                     idNumber.setHint(passenger_type_text+" ID NUMBER :");
                     idNumber.setVisibility(View.VISIBLE);
 
@@ -184,7 +186,9 @@ public class BusActivity extends AppCompatActivity {
         scheduleRequest.setStarting_point_id(uFromID);
         scheduleRequest.setDestination_id(uToID);
         scheduleRequest.setSchedule_date(uDate);
-
+        if( passenger_type_text.equals("Ordinary")){
+            passenger_type_text = "Normal";
+        }
         Call<ScheduleResponse> callSchedule = ApiClient.getBusClient().getSchedule(scheduleRequest, "Bearer " + token);
         callSchedule.enqueue(new Callback<ScheduleResponse>() {
             @Override
@@ -219,6 +223,7 @@ public class BusActivity extends AppCompatActivity {
                     "No Available Seats ",
                     false);
         }else{
+//            Toast.makeText(BusActivity.this,passenger_type_text,Toast.LENGTH_SHORT).show();
             if(passenger_type_text.equals("Normal")){
                 gotoConfirm();
             }else{
@@ -255,10 +260,12 @@ public class BusActivity extends AppCompatActivity {
         transactionRequest.setDestination_id(uToID);
         transactionRequest.setSchedule_date(uDate);
         transactionRequest.setQuantity(quantity);
-        transactionRequest.setPassenger_type(passenger_type_text);
-        if(!passenger_type_text.equals("Normal")){
+        if(!passenger_type_text.equals("Ordinary")){
             transactionRequest.setId_number(idNumber.getText().toString());
+            passenger_type_text = "Normal";
         }
+        transactionRequest.setPassenger_type(passenger_type_text);
+
 
 
         Call<Booking> transCall = ApiClient.getBusClient().getTransaction(transactionRequest, "Bearer " + token);
